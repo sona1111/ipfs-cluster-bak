@@ -591,11 +591,11 @@ var filterGroups = map[string][]string{
 	"queued": {"queued", "pin_queued", "unpin_queued"},
 }
 
-// check if and of the strings in matches are in the list list
-func anyStringInSlice(matches []string, list []string) bool {
+// check if any of the strings in matches are in the list
+func anyStringInSlice(matches, list []string) bool {
 	for _, b := range list {
 		for _, d := range matches {
-			if len(d) > 0 && len(b) > 0 && d == b {
+			if len(b) > 0 && d == b {
 				return true
 			}
 		}
