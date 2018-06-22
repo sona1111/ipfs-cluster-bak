@@ -104,14 +104,14 @@ func (c *Client) Allocation(ci *cid.Cid) (api.Pin, error) {
 // is fetched from all cluster peers.
 func (c *Client) Status(ci *cid.Cid, local bool) (api.GlobalPinInfo, error) {
 	var gpi api.GlobalPinInfoSerial
-	err := c.do("GET", fmt.Sprintf("/pins/%s?local=%t", ci.String(), local), nil, &gpi)
+	err := c.do("GET", fmt.Sprintf("/pins/%s?local=%t&filter=%s", ci.String(), local, c.config.Filter), nil, &gpi)
 	return gpi.ToGlobalPinInfo(), err
 }
 
 // StatusAll gathers Status() for all tracked items.
 func (c *Client) StatusAll(local bool) ([]api.GlobalPinInfo, error) {
 	var gpis []api.GlobalPinInfoSerial
-	err := c.do("GET", fmt.Sprintf("/pins?local=%t", local), nil, &gpis)
+	err := c.do("GET", fmt.Sprintf("/pins?local=%t&filter=%s", local, c.config.Filter), nil, &gpis)
 	result := make([]api.GlobalPinInfo, len(gpis))
 	for i, p := range gpis {
 		result[i] = p.ToGlobalPinInfo()
